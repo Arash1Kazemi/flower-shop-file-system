@@ -1,4 +1,5 @@
 *.d
+*.txt
 
 *.swp
 
@@ -15,5 +16,6 @@
 *.exe
 *.out
 *.app
+bin
 
 *.dwo
