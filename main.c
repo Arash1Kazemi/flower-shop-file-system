@@ -11,17 +11,19 @@ int main(void) {
     printf("1 - Existing Flowers\n");
     printf("2 - Add Flower\n");
     printf("3 - Search Flowers\n");
-    printf("4 - Buy Flower\n");
-    printf("5 - Exit\n");
+    printf("4 - Update Flower\n");
+    printf("5 - Delete Flower\n");
+    printf("6 - Exit\n");
     // printf("Your choice: ");
     scanf("%d", &choice);
 
     switch (choice) {
       case 1: list_flowers(); break;
       case 2: add_flower(); break;
-      // case 3: ?; break;
-      // case 4: ?; break;
-      case 5: exit(0);
+      case 3: search_flower(); break;
+      case 4: update_flower(); break;
+      case 5: delete_flower(); break;
+      case 6: exit(0);
       default: printf("Invalid input. Try again.\n");
     }
   }

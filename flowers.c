@@ -60,3 +60,96 @@ void list_flowers() {
   }
   fclose(file);
 }
+
+void delete_flower() {
+  int id;
+  printf_s("Enter flower ID to delete: ");
+  scanf_s("%d", id);
+
+  FILE *file = fopen(DB_FILE, "r");
+  FILE *temp = fopen("temp.txt", "w");
+
+  if(!file || !temp ){
+    printf_s("Error in opening file.\n");
+    return;
+  }
+
+  char line [250];
+  int found = 0;
+
+  while (fgets(line, sizeof(line), file)){
+    int fid;
+    sscanf_s(line, "%d", &fid);
+    if(fid == id){
+      found = 1;
+      continue;
+    }
+    fprintf_s(temp, "%s", line);
+  }
+
+  fclose(file);
+  fclose(temp);
+
+  if(found){
+    remove(DB_FILE);
+    rename("temp.txt", DB_FILE);
+    printf_s("Flower dleated successfuly.\n");
+  } else {
+    remove("temp.txt");
+    printf_s("Flower Id not found.\n");
+  }
+}
+
+void update_flower(){
+  int id;
+  printf_s("Enter the Flower ID to update");
+  scanf_s("%d", id);
+
+  FILE *file = fopen(DB_FILE, "w");
+  FILE *temp = fopen("temp.txt", "w");
+  
+  if (!file){
+    printf_s("Error in opening file.\n");
+    return;
+  }
+  
+  char line[250];
+  int found = 0;
+
+  while(fgets(line, sizeof(line), file)){
+
+    int fid, quantity, sold;
+    char fname[50];
+    float price;
+
+    sscanf_s(line, "%d", &fid);
+    if(fid == id){
+      found = 1;
+      printf_s("Enter new Name: "); 
+      scanf_s("%49s", fname);
+      printf_s("Enter new Price: ");
+      scanf_s("%f", &price);
+      printf_s("Enter new Quantity: ");
+      scanf_s("%d", &quantity);
+      fprintf_s(temp, "%d,%s,%.2f,%d,%d\n", fid, fname, price, quantity, sold);  
+    } else {
+      fprintf_s(temp, "%s", line);
+    }
+  }
+  fclose(file);
+  fclose(temp);
+
+  if(found){
+    remove(DB_FILE);
+    rename("temp.txt", DB_FILE);
+    printf_s("Flower dleated successfuly.\n");
+  }else{        
+  remove("temp.txt");
+        printf_s("Flower ID not found.\n");
+  }
+}
+
+search_flower(){
+  
+}
+
