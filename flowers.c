@@ -98,7 +98,7 @@ void delete_flower() {
         found = 1;
         continue;
       }
-      parse_flower(temp, &f);
+      print_flower(temp, &f);
     }
   }
 
