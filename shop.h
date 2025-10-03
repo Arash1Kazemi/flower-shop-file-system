@@ -101,13 +101,26 @@ int load_pot_by_id(int id, Pot *p);
 void update_pot_stock(const Pot *updated);
 
 // Customer prototypes
+/*
 void add_customer();
 void list_customers();
 void delete_customer();
 void update_customer();
 void search_customer();
+*/
+
 int parse_customer(const char *line, Customer *c);
 void print_customer(FILE *file, const Customer *c);
+void customer_menu(Customer *c);
+void get_current_date(char *buffer, int size);
+void buy_flower(Customer *c);
+void buy_pot(Customer *c);
+Customer* load_customer_by_id(int id);
+Customer* customer_login();
+Customer* customer_register();
+Customer* customer_portal_login_register();
+void view_receipts(Customer* c);
+
 
 // Seller prototypes
 void add_seller();

@@ -80,7 +80,7 @@ Customer* customer_portal_login_register() {
         Customer *c = customer_login();
         if (c) return c;
         break;
-      }
+     }
       case 2: {
         Customer *c = customer_register();
         if (c) return c;

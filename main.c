@@ -72,6 +72,7 @@ int main(void) {
             // TODO: add list_customers(), add_customer(), etc.
       break;
 
+    /*
     case 4:
       while (1) {
         printf("\n--- payment ---\n");
@@ -98,6 +99,7 @@ int main(void) {
         }
       }
       break;
+      */
 
     case 5: exit(0);
 
