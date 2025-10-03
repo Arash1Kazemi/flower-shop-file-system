@@ -1,27 +1,61 @@
 #include "shop.h"
 
 int main(void) {
-  int choice;
+  int main_choice, sub_choice;
+
   while (1) {
-    printf("\n--- Flower Shop Menu (Flowers Only) ---\n");
-    printf("1 - List Flowers\n");
-    printf("2 - Add Flower\n");
-    printf("3 - Search Flower\n");
-    printf("4 - Update Flower\n");
-    printf("5 - Delete Flower\n");
-    printf("6 - Exit\n");
-    if (!get_valid_int("Your choice: ", &choice))
+    printf("\n=== Main Menu ===\n");
+    printf("1 - Flowers\n");
+    printf("2 - Pots\n");
+    printf("3 - Customers\n");
+    printf("4 - Exit\n");
+
+    if (!get_valid_int("Your choice: ", &main_choice))
       continue;
 
-    switch (choice) {
-    case 1: list_flowers(); break;
-    case 2: add_flower(); break;
-    case 3: search_flower(); break;
-    case 4: update_flower(); break;
-    case 5: delete_flower(); break;
-    case 6: exit(0);
-    default: printf("Invalid choice.\n");
+    switch (main_choice) {
+
+    case 1: // flowers
+      while (1) {
+        printf("\n--- flower menu ---\n");
+        printf("1 - list flowers\n");
+        printf("2 - add flower\n");
+        printf("3 - search flower\n");
+        printf("4 - update flower\n");
+        printf("5 - delete flower\n");
+        printf("6 - back\n");
+
+        if (!get_valid_int("your choice: ", &sub_choice))
+          continue;
+
+        if (sub_choice == 6)
+          break;
+
+        switch (sub_choice) {
+        case 1: list_flowers(); break;
+        case 2: add_flower(); break;
+        case 3: search_flower(); break;
+        case 4: update_flower(); break;
+        case 5: delete_flower(); break;
+        default: printf("invalid choice.\n");
+        }
+      } break;
+
+    case 2: // Pots
+        // TODO: add list_pots(), add_pot(), etc.
+      break;
+
+    case 3: // Customers
+        // TODO: add list_customers(), add_customer(), etc.
+      break;
+
+    case 4:
+      exit(0);
+
+    default:
+      printf("Invalid choice.\n");
     }
   }
   return 0;
 }
+
