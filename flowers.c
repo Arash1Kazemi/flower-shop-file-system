@@ -180,19 +180,21 @@ void search_flower() {
     printf("Enter Flower ID: ");
     scanf("%d", &id);
 
-    while (fgets(line, sizeof(line), file)) {
-      if(parse_flower(line, &f)) {
+    while (fgets(line, sizeof(line), file)){
+      if (parse_flower(line, &f) && f.id == id){
         printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n", f.id, f.name, f.price, f.quantity, f.sold);
         found = 1;
-        break;
+        break; 
       }
     }
   } else if (choice == 2) {
     printf("Enter Flower Name: ");
-    scanf("%49s", name);
+    getchar();
+    fgets(name, sizeof(name), stdin);
+    name[strcspn(name, "\n")] = '\0'; // Remove trailing newline.
 
-    while (fgets(line, sizeof(line), file)) {
-      if(parse_flower(line, &f)) {
+    while (fgets(line, sizeof(line), file)){
+      if (parse_flower(line, &f) && strcmp(f.name, name) == 0){
         printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n", f.id, f.name, f.price, f.quantity, f.sold);
         found = 1;
       }
