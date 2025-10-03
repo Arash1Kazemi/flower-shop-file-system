@@ -170,7 +170,6 @@ void search_flower() {
   }
 
   Node *bst_root = NULL;
-  HashNode *hash_table[HASH_SIZE] = {0};
   Flower f;
   char line[256];
   while (fgets(line, sizeof(line), file)) {
@@ -180,7 +179,6 @@ void search_flower() {
         continue;
       *f_copy = f;
       bst_root = insert_bst(bst_root, f_copy, f.id, f.name);
-      insert_hash(hash_table, f.id, f_copy);
     }
   }
   fclose(file);
@@ -190,14 +188,13 @@ void search_flower() {
     int id;
     if (!get_valid_int("Enter Flower ID: ", &id)) {
       free_bst(bst_root);
-      free_hash_table(hash_table);
       return;
     }
 
-    Flower *result = search_hash(hash_table, id);
+    Node *result = search_bst_by_id(bst_root, id);
     if (result) {
-      printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n", result->id, result->name, result->price,
-             result->quantity, result->sold);
+      Flower *f = (Flower *)result->data;
+      printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n", f->id, f->name, f->price, f->quantity, f->sold);
       found = 1;
     }
   } else {
@@ -206,7 +203,6 @@ void search_flower() {
     if (fgets(name, sizeof(name), stdin) == NULL) {
       printf("Error reading input.\n");
       free_bst(bst_root);
-      free_hash_table(hash_table);
       return;
     }
     name[strcspn(name, "\n")] = '\0';
@@ -224,7 +220,6 @@ void search_flower() {
   }
 
   free_bst(bst_root);
-  free_hash_table(hash_table);
 }
 
 int parse_flower(const char *line, Flower *f) {
