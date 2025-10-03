@@ -5,7 +5,7 @@ Node *insert_bst(Node *root, void *data, int id, const char *name) {
     Node *new = malloc(sizeof(Node));
     if (!new)
       return NULL;
-    new->data = data; // Store pointer to Flower
+    new->data = data;
     new->id = id;
     strncpy(new->name, name, sizeof(new->name) - 1);
     new->name[sizeof(new->name) - 1] = '\0';
@@ -44,7 +44,7 @@ void free_bst(Node *root) {
     return;
   free_bst(root->left);
   free_bst(root->right);
-  free(root->data); // Free the Flower struct
+  free(root->data);
   free(root);
 }
 
@@ -54,7 +54,7 @@ void insert_hash(HashNode *table[], int key, void *value) {
   if (!new)
     return;
   new->key = key;
-  new->value = value; // Store pointer to Flower
+  new->value = value;
   new->next = table[idx];
   table[idx] = new;
 }
@@ -64,7 +64,7 @@ void *search_hash(HashNode *table[], int key) {
   HashNode *node = table[idx];
   while (node) {
     if (node->key == key)
-      return node->value; // Return Flower pointer
+      return node->value;
     node = node->next;
   }
   return NULL;
@@ -76,7 +76,7 @@ void free_hash_table(HashNode *table[]) {
     while (node) {
       HashNode *temp = node;
       node = node->next;
-      free(temp->value); // Free the Flower struct
+      free(temp->value);
       free(temp);
     }
     table[i] = NULL;

@@ -8,13 +8,11 @@ int get_next_id(const char *filename) {
   int max_id = 0;
   char line[256];
   int id;
-
   while (fgets(line, sizeof(line), file)) {
     sscanf(line, "%d,", &id);
     if (id > max_id)
       max_id = id;
   }
-
   fclose(file);
   return max_id + 1;
 }
@@ -24,9 +22,7 @@ int get_valid_int(const char *prompt, int *value) {
   printf("%s", prompt);
   if (fgets(buffer, sizeof(buffer), stdin) == NULL)
     return 0;
-
   buffer[strcspn(buffer, "\n")] = '\0';
-
   if (sscanf(buffer, "%d", value) != 1) {
     printf("Invalid input. Must be a number.\n");
     return 0;
@@ -39,9 +35,7 @@ int get_valid_float(const char *prompt, float *value) {
   printf("%s", prompt);
   if (fgets(buffer, sizeof(buffer), stdin) == NULL)
     return 0;
-
   buffer[strcspn(buffer, "\n")] = '\0';
-
   if (sscanf(buffer, "%f", value) != 1) {
     printf("Invalid input. Must be a number.\n");
     return 0;

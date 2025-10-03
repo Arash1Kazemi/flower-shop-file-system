@@ -1,16 +1,12 @@
-#include "flowers.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "shop.h"
 
 int main(void) {
   int choice;
-
   while (1) {
-    printf("\nEnter Numbers below to continue:\n");
-    printf("1 - Existing Flowers\n");
+    printf("\n--- Flower Shop Menu (Flowers Only) ---\n");
+    printf("1 - List Flowers\n");
     printf("2 - Add Flower\n");
-    printf("3 - Search Flowers\n");
+    printf("3 - Search Flower\n");
     printf("4 - Update Flower\n");
     printf("5 - Delete Flower\n");
     printf("6 - Exit\n");
@@ -24,7 +20,7 @@ int main(void) {
     case 4: update_flower(); break;
     case 5: delete_flower(); break;
     case 6: exit(0);
-    default: printf("Invalid input. Try again.\n");
+    default: printf("Invalid choice.\n");
     }
   }
   return 0;

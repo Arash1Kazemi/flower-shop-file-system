@@ -5,12 +5,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define FLOWERS_FILE "Mackfile/flowers.txt"
-#define POTS_FILE "Mackfile/pots.txt"
-#define CUSTOMERS_FILE "Mackfile/customers.txt"
-#define SELLERS_FILE "Mackfile/sellers.txt"
-#define PAYMENTS_FILE "Mackfile/payments.txt"
-#define PAYMENT_ITEMS_FILE "Mackfile/payment_items.txt"
+#define FLOWERS_FILE "flowers.txt"
+#define POTS_FILE "pots.txt"
+#define CUSTOMERS_FILE "customers.txt"
+#define SELLERS_FILE "sellers.txt"
+#define PAYMENTS_FILE "payments.txt"
+#define PAYMENT_ITEMS_FILE "payment_items.txt"
 #define HASH_SIZE 100
 
 typedef struct {
@@ -68,7 +68,7 @@ typedef struct Node {
 // Hash table for O(1) lookup
 typedef struct HashNode {
   int key;
-  void *value;
+  void *value; // Generic
   struct HashNode *next;
 } HashNode;
 
@@ -82,17 +82,51 @@ void add_flower();
 void list_flowers();
 void delete_flower();
 void update_flower();
-void search_flower();  //*
+void search_flower();
 int parse_flower(const char *line, Flower *f);
 void print_flower(FILE *file, const Flower *f);
 int load_flower_by_id(int id, Flower *f);
 void update_flower_stock(const Flower *updated);
 
 // Pot prototypes
+void add_pot();
+void list_pots();
+void delete_pot();
+void update_pot();
+void search_pot();
+int parse_pot(const char *line, Pot *p);
+void print_pot(FILE *file, const Pot *p);
+int load_pot_by_id(int id, Pot *p);
+void update_pot_stock(const Pot *updated);
 
 // Customer prototypes
+void add_customer();
+void list_customers();
+void delete_customer();
+void update_customer();
+void search_customer();
+int parse_customer(const char *line, Customer *c);
+void print_customer(FILE *file, const Customer *c);
+
+// Seller prototypes
+void add_seller();
+void list_sellers();
+void delete_seller();
+void update_seller();
+void search_seller();
+int parse_seller(const char *line, Seller *s);
+void print_seller(FILE *file, const Seller *s);
 
 // Payment prototypes
+void add_payment();
+void list_payments();
+void delete_payment();
+void update_payment();
+void search_payment();
+int parse_payment(const char *line, Payment *p);
+void print_payment(FILE *file, const Payment *p);
+int parse_payment_item(const char *line, PaymentItem *pi);
+void print_payment_item(FILE *file, const PaymentItem *pi);
 
 // Report prototypes
 void show_reports_menu();
