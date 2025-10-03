@@ -39,23 +39,43 @@ int main(void) {
         case 5: delete_flower(); break;
         default: printf("invalid choice.\n");
         }
-      } break;
-
-    case 2: // Pots
-        // TODO: add list_pots(), add_pot(), etc.
+      }
       break;
 
+    case 2:
+      while (1) {
+        printf("\n--- pot menu ---\n");
+        printf("1 - list pots\n");
+        printf("2 - add pot\n");
+        printf("3 - search pot\n");
+        printf("4 - update pot\n");
+        printf("5 - delete pot\n");
+        printf("6 - back\n");
+
+        if (!get_valid_int("your choice: ", &sub_choice))
+          continue;
+
+        if (sub_choice == 6)
+          break;
+
+        switch (sub_choice) {
+        case 1: list_pots(); break;
+        case 2: add_pot(); break;
+        case 3: search_pot(); break;
+        case 4: update_pot(); break;
+        case 5: delete_pot(); break;
+        default: printf("invalid choice.\n");
+        }
+      }
+      break;
     case 3: // Customers
-        // TODO: add list_customers(), add_customer(), etc.
+            // TODO: add list_customers(), add_customer(), etc.
       break;
 
-    case 4:
-      exit(0);
+    case 4: exit(0);
 
-    default:
-      printf("Invalid choice.\n");
+    default: printf("Invalid choice.\n");
     }
   }
   return 0;
 }
-
