@@ -160,12 +160,18 @@ void update_flower() {
 }
 
 void search_flower() {
-  int choice, id;
+  int choice = 0;
+  int id = 0;
   char name[50];
   int found = 0;
 
   printf("Search by:\n1. ID\n2. Name\nChoose: ");
-  scanf("%d", &choice);
+  if (scanf("%d", &choice) != 1) {
+    while (getchar() != '\n');
+    printf("Invalid input. input must be a number.\n");
+    return;
+  }
+  getchar();
 
   FILE *file = fopen(DB_FILE, "r");
   if (!file) {
@@ -178,22 +184,27 @@ void search_flower() {
 
   if (choice == 1) {
     printf("Enter Flower ID: ");
-    scanf("%d", &id);
+    if (scanf("%d", &id) != 1) {
+      while (getchar() != '\n');
+      printf("invalid input. Must be a number.\n");
+      fclose(file);
+      return;
+    }
+    getchar();
 
-    while (fgets(line, sizeof(line), file)){
-      if (parse_flower(line, &f) && f.id == id){
+    while (fgets(line, sizeof(line), file)) {
+      if (parse_flower(line, &f) && f.id == id) {
         printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n", f.id, f.name, f.price, f.quantity, f.sold);
         found = 1;
-        break; 
+        break;
       }
     }
   } else if (choice == 2) {
     printf("Enter Flower Name: ");
-    getchar();
     fgets(name, sizeof(name), stdin);
     name[strcspn(name, "\n")] = '\0'; // Remove trailing newline.
 
-    while (fgets(line, sizeof(line), file)){
+    while (fgets(line, sizeof(line), file)) {
       if (parse_flower(line, &f) && strcmp(f.name, name) == 0){
         printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n", f.id, f.name, f.price, f.quantity, f.sold);
         found = 1;
