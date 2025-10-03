@@ -68,7 +68,7 @@ typedef struct Node {
 // Hash table for O(1) lookup
 typedef struct HashNode {
   int key;
-  void *value; // Generic
+  void *value;
   struct HashNode *next;
 } HashNode;
 
