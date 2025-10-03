@@ -1,7 +1,7 @@
 #ifndef FLOWERS_H
 #define FLOWERS_H
 
-typedef struct { 
+typedef struct {
   int id;
   char name[50];
   float price;
@@ -16,7 +16,7 @@ void update_flower();
 void search_flower();
 
 // Helper funcs
-int parse_flower(const char *line, Flower *f); 
+int parse_flower(const char *line, Flower *f);
 void print_flower(FILE * file, const Flower *f);
 
 #endif

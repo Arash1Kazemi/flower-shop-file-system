@@ -1,0 +1,17 @@
+BasedOnStyle: LLVM
+IndentWidth: 2
+ColumnLimit: 120
+BraceWrapping:
+  AfterStruct: false
+  AfterClass: false
+  AfterEnum: false
+  AfterFunction: false
+  AfterControlStatement: false
+  AfterNamespace: false
+  AfterUnion: false
+  BeforeCatch: false
+  BeforeElse: false
+  IndentBraces: false
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortBlocksOnASingleLine: true
+AllowShortStatementsOnASingleLine: true

@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "flowers.h"
+#include "shop.h"
 
-#define DB_FILE "flowers.txt"
 
 int parse_flower(const char *line, Flower *f) { 
   // Parse a flower from file to structuer
@@ -15,7 +14,7 @@ void print_flower(FILE *file, const Flower *f) {
 }
 
 int get_next_id() {
-  FILE *file = fopen(DB_FILE, "r");
+  FILE *file = fopen(FLOWERS_FILE, "r");
   if (!file)
     return 1;
 
@@ -33,19 +32,26 @@ int get_next_id() {
   return max_id + 1;
 }
 
+
+
 void add_flower() {
   Flower f;
-  f.id = get_next_id();
+  f.id = get_next_id(FLOWERS_FILE);
   f.sold = 0;
 
   printf("Enter flower name: ");
   scanf("%49s", f.name); // 50 characters max, not to buffer oveflow
-  printf("Enter price: ");
+
+  if (!get_valid_float("Enter price: ", &f.price))
+    return;
+  if (!get_valid_int("Enter quantity: ", &f.quantity))
+    return;
+/*printf("Enter price: ");
   scanf("%f", &f.price);
   printf("Enter quantity: ");
-  scanf("%d", &f.quantity);
+  scanf("%d", &f.quantity); */
 
-  FILE *file = fopen(DB_FILE, "a");
+  FILE *file = fopen(FLOWERS_FILE, "a");
   if (!file) {
     perror("could not open DB file");
     return;
@@ -58,7 +64,7 @@ void add_flower() {
 }
 
 void list_flowers() {
-  FILE *file = fopen(DB_FILE, "r");
+  FILE *file = fopen(FLOWERS_FILE, "r");
   if (!file) {
     printf("No flowers found.\n");
     return;
@@ -81,7 +87,7 @@ void delete_flower() {
   printf("Enter flower ID to delete: ");
   scanf("%d", &id);
 
-  FILE *file = fopen(DB_FILE, "r");
+  FILE *file = fopen(FLOWERS_FILE, "r");
   FILE *temp = fopen("temp.txt", "w");
   if (!file || !temp) {
     printf("Error opening file.\n");
@@ -106,8 +112,8 @@ void delete_flower() {
   fclose(temp);
 
   if (found) {
-    remove(DB_FILE);
-    rename("temp.txt", DB_FILE);
+    remove(FLOWERS_FILE);
+    rename("temp.txt", FLOWERS_FILE);
     printf("Flower deleted successfully.\n");
   } else {
     remove("temp.txt");
@@ -120,7 +126,7 @@ void update_flower() {
   printf("Enter the Flower ID to update: ");
   scanf("%d", &id);
 
-  FILE *file = fopen(DB_FILE, "r");
+  FILE *file = fopen(FLOWERS_FILE, "r");
   FILE *temp = fopen("temp.txt", "w");
   if (!file || !temp) {
     printf("Error opening file.\n");
@@ -150,8 +156,8 @@ void update_flower() {
   fclose(temp);
 
   if (found) {
-    remove(DB_FILE);
-    rename("temp.txt", DB_FILE);
+    remove(FLOWERS_FILE);
+    rename("temp.txt", FLOWERS_FILE);
     printf("Flower updated successfully.\n");
   } else {
     remove("temp.txt");
@@ -173,7 +179,7 @@ void search_flower() {
   }
   getchar();
 
-  FILE *file = fopen(DB_FILE, "r");
+  FILE *file = fopen(FLOWERS_FILE, "r");
   if (!file) {
     printf("No flowers found.\n");
     return;
