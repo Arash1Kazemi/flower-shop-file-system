@@ -56,11 +56,12 @@ typedef struct {
   int quantity;
 } PaymentItem;
 
-// BST for log(n) search
+// AVL tree for log(n) search
 typedef struct Node {
   void *data;    // Generic to hold Flower, Pot, etc.
   int id;        // For comparison
-  char name[50]; // For name-based BST
+  char name[50]; // For name-based search
+  int height;    // For AVL balancing
   struct Node *left;
   struct Node *right;
 } Node;

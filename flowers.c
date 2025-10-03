@@ -169,7 +169,7 @@ void search_flower() {
     return;
   }
 
-  Node *bst_root = NULL;
+  Node *avl_root = NULL;
   Flower f;
   char line[256];
   while (fgets(line, sizeof(line), file)) {
@@ -178,7 +178,7 @@ void search_flower() {
       if (!f_copy)
         continue;
       *f_copy = f;
-      bst_root = insert_bst(bst_root, f_copy, f.id, f.name);
+      avl_root = insert_bst(avl_root, f_copy, f.id, f.name);
     }
   }
   fclose(file);
@@ -187,11 +187,11 @@ void search_flower() {
   if (choice == 1) {
     int id;
     if (!get_valid_int("Enter Flower ID: ", &id)) {
-      free_bst(bst_root);
+      free_bst(avl_root);
       return;
     }
 
-    Node *result = search_bst_by_id(bst_root, id);
+    Node *result = search_bst_by_id(avl_root, id);
     if (result) {
       Flower *f = (Flower *)result->data;
       printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n", f->id, f->name, f->price, f->quantity, f->sold);
@@ -202,12 +202,12 @@ void search_flower() {
     printf("Enter Flower Name: ");
     if (fgets(name, sizeof(name), stdin) == NULL) {
       printf("Error reading input.\n");
-      free_bst(bst_root);
+      free_bst(avl_root);
       return;
     }
     name[strcspn(name, "\n")] = '\0';
 
-    Node *result = search_bst_by_name(bst_root, name);
+    Node *result = search_bst_by_name(avl_root, name);
     if (result) {
       Flower *f = (Flower *)result->data;
       printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n", f->id, f->name, f->price, f->quantity, f->sold);
@@ -219,7 +219,7 @@ void search_flower() {
     printf("Flower not found.\n");
   }
 
-  free_bst(bst_root);
+  free_bst(avl_root);
 }
 
 int parse_flower(const char *line, Flower *f) {
