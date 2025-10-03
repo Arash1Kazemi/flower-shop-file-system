@@ -68,9 +68,32 @@ int main(void) {
         }
       }
       break;
-    case 3: // Customers
-            // TODO: add list_customers(), add_customer(), etc.
+
+
+    case 3: { // customer portal (was implemented in the customer_,,,.c btw)
+      Customer *c = customer_portal_login_register();
+      if (!c) break;
+
+      while (1) {
+        printf("\n--- Customer Menu ---\n");
+        printf("1 - Buy Flower\n");
+        printf("2 - Buy Pot\n");
+        printf("3 - View Receipts\n");
+        printf("4 - Logout\n");
+
+        if (!get_valid_int("Your choice: ", &sub_choice))
+          continue;
+        if (sub_choice == 4) break;
+
+        switch (sub_choice) {
+          case 1: buy_flower(c); break;
+          case 2: buy_pot(c); break;
+          case 3: view_receipts(c); break;
+          default: printf("Invalid choice.\n");
+        }
+      }
       break;
+    }
 
     /*
     case 4:
@@ -100,9 +123,7 @@ int main(void) {
       }
       break;
       */
-
-    case 5: exit(0);
-
+    case 4: exit(0);
     default: printf("Invalid choice.\n");
     }
   }
