@@ -72,7 +72,34 @@ int main(void) {
             // TODO: add list_customers(), add_customer(), etc.
       break;
 
-    case 4: exit(0);
+    case 4:
+      while (1) {
+        printf("\n--- payment ---\n");
+        printf("1 - List Payments\n");
+        printf("2 - Add Payment\n");
+        printf("3 - search Payment\n");
+        printf("4 - update Payment\n");
+        printf("5 - delete Payment\n");
+        printf("6 - back\n");
+
+        if (!get_valid_int("your choice: ", &sub_choice))
+          continue;
+
+        if (sub_choice == 6)
+          break;
+
+        switch (sub_choice) {
+        case 1: list_payments(); break;
+        case 2: add_payment(); break;
+        case 3: search_payment(); break;
+        case 4: update_payment(); break;
+        case 5: delete_payment(); break;
+        default: printf("invalid choice.\n");
+        }
+      }
+      break;
+
+    case 5: exit(0);
 
     default: printf("Invalid choice.\n");
     }
