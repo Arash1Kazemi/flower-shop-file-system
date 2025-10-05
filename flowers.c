@@ -172,26 +172,36 @@ void search_flower() {
   Node *avl_root = NULL;
   Flower f;
   char line[256];
+  int count = 0;
   while (fgets(line, sizeof(line), file)) {
     if (parse_flower(line, &f)) {
       Flower *f_copy = malloc(sizeof(Flower));
-      if (!f_copy)
+      if (!f_copy) {
+        printf("Memory allocation failed for flower ID %d.\n", f.id);
         continue;
+      }
       *f_copy = f;
-      avl_root = insert_bst(avl_root, f_copy, f.id, f.name);
+      avl_root = insert_avl(avl_root, f_copy, f.id, f.name);
+      if (!avl_root) {
+        printf("Failed to insert flower ID %d into AVL tree.\n", f.id);
+        free(f_copy);
+      } else {
+        count++;
+      }
     }
   }
   fclose(file);
+  printf("Loaded %d flowers into AVL tree.\n", count);
 
   int found = 0;
   if (choice == 1) {
     int id;
     if (!get_valid_int("Enter Flower ID: ", &id)) {
-      free_bst(avl_root);
+      free_avl(avl_root);
       return;
     }
 
-    Node *result = search_bst_by_id(avl_root, id);
+    Node *result = search_avl_by_id(avl_root, id);
     if (result) {
       Flower *f = (Flower *)result->data;
       printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n", f->id, f->name, f->price, f->quantity, f->sold);
@@ -202,24 +212,32 @@ void search_flower() {
     printf("Enter Flower Name: ");
     if (fgets(name, sizeof(name), stdin) == NULL) {
       printf("Error reading input.\n");
-      free_bst(avl_root);
+      free_avl(avl_root);
       return;
     }
     name[strcspn(name, "\n")] = '\0';
+    printf("Searching for name: '%s'\n", name);
 
-    Node *result = search_bst_by_name(avl_root, name);
-    if (result) {
-      Flower *f = (Flower *)result->data;
-      printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n", f->id, f->name, f->price, f->quantity, f->sold);
-      found = 1;
+    // Find all matches for name (case-insensitive)
+    void inorder_search(Node * node, const char *search_name) {
+      if (!node)
+        return;
+      inorder_search(node->left, search_name);
+      if (_stricmp(search_name, node->name) == 0) {
+        Flower *f = (Flower *)node->data;
+        printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n", f->id, f->name, f->price, f->quantity, f->sold);
+        found = 1;
+      }
+      inorder_search(node->right, search_name);
     }
+    inorder_search(avl_root, name);
   }
 
   if (!found) {
     printf("Flower not found.\n");
   }
 
-  free_bst(avl_root);
+  free_avl(avl_root);
 }
 
 int parse_flower(const char *line, Flower *f) {

@@ -159,4 +159,10 @@ void insert_hash(HashNode *table[], int key, void *value);
 void *search_hash(HashNode *table[], int key);
 void free_hash_table(HashNode *table[]);
 
+// AVL tree prototypes
+Node *insert_avl(Node *root, void *data, int id, const char *name);
+Node *search_avl_by_id(Node *root, int id);
+Node *search_avl_by_name(Node *root, const char *name);
+void free_avl(Node *root);
+
 #endif

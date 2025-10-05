@@ -1,26 +1,5 @@
 #include "shop.h"
 #include <stdio.h>
-/*
-void add_payment() {
-
-}
-
-void list_payments() {
-
-}
-
-void delete_payment() {
-
-}
-
-void update_payment() {
-
-}
-
-void search_payment() {
-
-}
-*/
 
 void print_payment(FILE *file, const Payment *p) {
   fprintf(file, "%d,%d,%d,%s,%.2f\n",

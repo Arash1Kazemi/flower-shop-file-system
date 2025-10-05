@@ -48,6 +48,10 @@ void free_bst(Node *root) {
   free(root);
 }
 
+
+// AVL Tree Functions
+#include "shop.h"
+
 static int max(int a, int b) { return (a > b) ? a : b; }
 
 static int get_height(Node *node) { return node ? node->height : 0; }
@@ -132,7 +136,7 @@ Node *search_avl_by_id(Node *root, int id) {
 Node *search_avl_by_name(Node *root, const char *name) {
   if (!root)
     return NULL;
-  int cmp = strcmp(name, root->name);
+  int cmp = _stricmp(name, root->name);
   if (cmp == 0)
     return root;
   if (cmp < 0)
