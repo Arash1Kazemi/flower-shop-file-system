@@ -169,6 +169,7 @@ void search_flower() {
     return;
   }
 
+  // Build AVL tree from flowers file
   Node *avl_root = NULL;
   Flower f;
   char line[256];
@@ -218,7 +219,7 @@ void search_flower() {
     name[strcspn(name, "\n")] = '\0';
     printf("Searching for name: '%s'\n", name);
 
-    // Find all matches for name (case-insensitive)
+    // Find all case-insensitive name matches using inorder traversal
     void inorder_search(Node * node, const char *search_name) {
       if (!node)
         return;
