@@ -13,6 +13,13 @@
 #define PAYMENT_ITEMS_FILE "payment_items.txt"
 #define HASH_SIZE 100
 
+#if defined(_WIN32) || defined(_WIN64)
+  #define stricmp _stricmp // windows
+#else
+  #include <strings.h> // linux
+  #define stricmp strcasecmp
+#endif
+
 typedef struct {
   int id;
   char name[50];

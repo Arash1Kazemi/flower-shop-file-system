@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c11
-OBJ = flowers.o helpers.o main.o optimizations.c pot.o customer_menu.o customer_portal.o customer_shopping.o customer.o payment.o customer_hash.o
+OBJ = flowers.o helpers.o main.o optimizations.o pot.o customer_menu.o customer_portal.o customer_shopping.o customer.o payment.o customer_hash.o
 TARGET = bin
 
 all: $(TARGET)

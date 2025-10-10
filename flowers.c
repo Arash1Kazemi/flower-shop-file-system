@@ -1,4 +1,5 @@
 #include "shop.h"
+#include <strings.h>
 
 void add_flower() {
   Flower f;
@@ -224,7 +225,7 @@ void search_flower() {
       if (!node)
         return;
       inorder_search(node->left, search_name);
-      if (_stricmp(search_name, node->name) == 0) {
+      if (stricmp(search_name, node->name) == 0) {
         Flower *f = (Flower *)node->data;
         printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n", f->id, f->name, f->price, f->quantity, f->sold);
         found = 1;

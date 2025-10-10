@@ -222,7 +222,7 @@ void search_pot() {
       if (!node)
         return;
       inorder_search(node->left, search_name);
-      if (_stricmp(search_name, node->name) == 0) {
+      if (stricmp(search_name, node->name) == 0) {
         Pot *p = (Pot *)node->data;
         printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n", p->id, p->name, p->price, p->quantity, p->sold);
         found = 1;

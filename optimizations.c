@@ -85,7 +85,7 @@ Node *search_avl_by_id(Node *root, int id) {
 Node *search_avl_by_name(Node *root, const char *name) {
   if (!root)
     return NULL;
-  int cmp = _stricmp(name, root->name);
+  int cmp = stricmp(name, root->name);
   if (cmp == 0)
     return root;
   if (cmp < 0)
