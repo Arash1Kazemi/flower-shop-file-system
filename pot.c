@@ -15,8 +15,10 @@ void add_pot() {
   strncpy(p.name, name, sizeof(p.name) - 1);
   p.name[sizeof(p.name) - 1] = '\0';
 
-  if (!get_valid_float("Enter price: ", &p.price)) return;
-  if (!get_valid_int("Enter quantity: ", &p.quantity)) return;
+  if (!get_valid_float("Enter price: ", &p.price))
+    return;
+  if (!get_valid_int("Enter quantity: ", &p.quantity))
+    return;
 
   FILE *file = fopen(POTS_FILE, "a");
   if (!file) {
@@ -40,8 +42,7 @@ void list_pots() {
   printf("\n--- Pots List ---\n");
   while (fgets(line, sizeof(line), file)) {
     if (parse_pot(line, &p)) {
-      printf("ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n",
-             p.id, p.name, p.price, p.quantity, p.sold);
+      printf("ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n", p.id, p.name, p.price, p.quantity, p.sold);
     }
   }
   fclose(file);
@@ -49,14 +50,17 @@ void list_pots() {
 
 void delete_pot() {
   int id;
-  if (!get_valid_int("Enter pot ID to delete: ", &id)) return;
+  if (!get_valid_int("Enter pot ID to delete: ", &id))
+    return;
 
   FILE *file = fopen(POTS_FILE, "r");
   FILE *temp = fopen("temp.txt", "w");
   if (!file || !temp) {
     printf("Error opening file.\n");
-    if (file) fclose(file);
-    if (temp) fclose(temp);
+    if (file)
+      fclose(file);
+    if (temp)
+      fclose(temp);
     return;
   }
 
@@ -86,14 +90,17 @@ void delete_pot() {
 
 void update_pot() {
   int id;
-  if (!get_valid_int("Enter the Pot ID to update: ", &id)) return;
+  if (!get_valid_int("Enter the Pot ID to update: ", &id))
+    return;
 
   FILE *file = fopen(POTS_FILE, "r");
   FILE *temp = fopen("temp.txt", "w");
   if (!file || !temp) {
     printf("Error opening file.\n");
-    if (file) fclose(file);
-    if (temp) fclose(temp);
+    if (file)
+      fclose(file);
+    if (temp)
+      fclose(temp);
     return;
   }
 
@@ -149,7 +156,8 @@ void update_pot() {
 
 void search_pot() {
   int choice;
-  if (!get_valid_int("Search by:\n1. ID\n2. Name\nChoose: ", &choice)) return;
+  if (!get_valid_int("Search by:\n1. ID\n2. Name\nChoose: ", &choice))
+    return;
   if (choice != 1 && choice != 2) {
     printf("Invalid choice. Please enter 1 or 2.\n");
     return;
@@ -161,32 +169,42 @@ void search_pot() {
     return;
   }
 
-  Node *bst_root = NULL;
+  Node *avl_root = NULL;
   Pot p;
   char line[256];
+  int count = 0;
   while (fgets(line, sizeof(line), file)) {
     if (parse_pot(line, &p)) {
       Pot *p_copy = malloc(sizeof(Pot));
-      if (!p_copy) continue;
+      if (!p_copy) {
+        printf("Memory allocation failed for pot ID %d.\n", p.id);
+        continue;
+      }
       *p_copy = p;
-      bst_root = insert_bst(bst_root, p_copy, p.id, p.name);
+      avl_root = insert_avl(avl_root, p_copy, p.id, p.name);
+      if (!avl_root) {
+        printf("Failed to insert pot ID %d into AVL tree.\n", p.id);
+        free(p_copy);
+      } else {
+        count++;
+      }
     }
   }
   fclose(file);
+  printf("Loaded %d pots into AVL tree.\n", count);
 
   int found = 0;
   if (choice == 1) {
     int id;
     if (!get_valid_int("Enter Pot ID: ", &id)) {
-      free_bst(bst_root);
+      free_avl(avl_root);
       return;
     }
 
-    Node *result = search_bst_by_id(bst_root, id);
+    Node *result = search_avl_by_id(avl_root, id);
     if (result) {
       Pot *p = (Pot *)result->data;
-      printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n",
-             p->id, p->name, p->price, p->quantity, p->sold);
+      printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n", p->id, p->name, p->price, p->quantity, p->sold);
       found = 1;
     }
   } else {
@@ -194,25 +212,31 @@ void search_pot() {
     printf("Enter Pot Name: ");
     if (fgets(name, sizeof(name), stdin) == NULL) {
       printf("Error reading input.\n");
-      free_bst(bst_root);
+      free_avl(avl_root);
       return;
     }
     name[strcspn(name, "\n")] = '\0';
+    printf("Searching for name: '%s'\n", name);
 
-    Node *result = search_bst_by_name(bst_root, name);
-    if (result) {
-      Pot *p = (Pot *)result->data;
-      printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n",
-             p->id, p->name, p->price, p->quantity, p->sold);
-      found = 1;
+    void inorder_search(Node * node, const char *search_name) {
+      if (!node)
+        return;
+      inorder_search(node->left, search_name);
+      if (_stricmp(search_name, node->name) == 0) {
+        Pot *p = (Pot *)node->data;
+        printf("Found: ID:%d Name:%s Price:%.2f Quantity:%d Sold:%d\n", p->id, p->name, p->price, p->quantity, p->sold);
+        found = 1;
+      }
+      inorder_search(node->right, search_name);
     }
+    inorder_search(avl_root, name);
   }
 
   if (!found) {
     printf("Pot not found.\n");
   }
 
-  free_bst(bst_root);
+  free_avl(avl_root);
 }
 
 int parse_pot(const char *line, Pot *p) {
@@ -225,7 +249,8 @@ void print_pot(FILE *file, const Pot *p) {
 
 int load_pot_by_id(int id, Pot *p) {
   FILE *file = fopen(POTS_FILE, "r");
-  if (!file) return 0;
+  if (!file)
+    return 0;
 
   char line[256];
   while (fgets(line, sizeof(line), file)) {
@@ -242,8 +267,10 @@ void update_pot_stock(const Pot *updated) {
   FILE *file = fopen(POTS_FILE, "r");
   FILE *temp = fopen("temp.txt", "w");
   if (!file || !temp) {
-    if (file) fclose(file);
-    if (temp) fclose(temp);
+    if (file)
+      fclose(file);
+    if (temp)
+      fclose(temp);
     return;
   }
 

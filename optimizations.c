@@ -1,57 +1,6 @@
 #include "shop.h"
 
-Node *insert_bst(Node *root, void *data, int id, const char *name) {
-  if (!root) {
-    Node *new = malloc(sizeof(Node));
-    if (!new)
-      return NULL;
-    new->data = data;
-    new->id = id;
-    strncpy(new->name, name, sizeof(new->name) - 1);
-    new->name[sizeof(new->name) - 1] = '\0';
-    new->left = new->right = NULL;
-    return new;
-  }
-  if (id < root->id) {
-    root->left = insert_bst(root->left, data, id, name);
-  } else {
-    root->right = insert_bst(root->right, data, id, name);
-  }
-  return root;
-}
-
-Node *search_bst_by_id(Node *root, int id) {
-  if (!root || root->id == id)
-    return root;
-  if (id < root->id)
-    return search_bst_by_id(root->left, id);
-  return search_bst_by_id(root->right, id);
-}
-
-Node *search_bst_by_name(Node *root, const char *name) {
-  if (!root)
-    return NULL;
-  int cmp = strcmp(name, root->name);
-  if (cmp == 0)
-    return root;
-  if (cmp < 0)
-    return search_bst_by_name(root->left, name);
-  return search_bst_by_name(root->right, name);
-}
-
-void free_bst(Node *root) {
-  if (!root)
-    return;
-  free_bst(root->left);
-  free_bst(root->right);
-  free(root->data);
-  free(root);
-}
-
-
 // AVL Tree Functions
-#include "shop.h"
-
 static int max(int a, int b) { return (a > b) ? a : b; }
 
 static int get_height(Node *node) { return node ? node->height : 0; }
@@ -156,8 +105,10 @@ void free_avl(Node *root) {
 void insert_hash(HashNode *table[], int key, void *value) {
   int idx = key % HASH_SIZE;
   HashNode *new = malloc(sizeof(HashNode));
-  if (!new)
+  if (!new) {
+    printf("Memory allocation failed for hash node.\n");
     return;
+  }
   new->key = key;
   new->value = value;
   new->next = table[idx];
@@ -186,4 +137,45 @@ void free_hash_table(HashNode *table[]) {
     }
     table[i] = NULL;
   }
+}
+
+void delete_hash(HashNode *table[], int key) {
+  int idx = key % HASH_SIZE;
+  HashNode *node = table[idx];
+  HashNode *prev = NULL;
+  while (node && node->key != key) {
+    prev = node;
+    node = node->next;
+  }
+  if (!node)
+    return;
+  if (prev) {
+    prev->next = node->next;
+  } else {
+    table[idx] = node->next;
+  }
+  free(node->value);
+  free(node);
+}
+
+void init_customer_hash_table() {
+  FILE *file = fopen(CUSTOMERS_FILE, "r");
+  if (!file) {
+    printf("Error opening customers file for hash table initialization.\n");
+    return;
+  }
+  char line[256];
+  while (fgets(line, sizeof(line), file)) {
+    Customer *c = malloc(sizeof(Customer));
+    if (!c) {
+      printf("Memory allocation failed for customer.\n");
+      continue;
+    }
+    if (parse_customer(line, c)) {
+      insert_hash(customer_hash_table, c->id, c);
+    } else {
+      free(c);
+    }
+  }
+  fclose(file);
 }

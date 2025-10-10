@@ -73,6 +73,9 @@ typedef struct HashNode {
   struct HashNode *next;
 } HashNode;
 
+// Declare global hash table for customers
+extern HashNode *customer_hash_table[HASH_SIZE]; // Global hash table for O(1) customer lookup
+
 // Helper prototypes
 int get_next_id(const char *filename);
 int get_valid_int(const char *prompt, int *value);
@@ -101,63 +104,41 @@ int load_pot_by_id(int id, Pot *p);
 void update_pot_stock(const Pot *updated);
 
 // Customer prototypes
-/*
-void add_customer();
-void list_customers();
-void delete_customer();
-void update_customer();
-void search_customer();
-*/
-
 int parse_customer(const char *line, Customer *c);
 void print_customer(FILE *file, const Customer *c);
 void customer_menu(Customer *c);
 void get_current_date(char *buffer, int size);
 void buy_flower(Customer *c);
 void buy_pot(Customer *c);
-Customer* load_customer_by_id(int id);
-Customer* customer_login();
-Customer* customer_register();
-Customer* customer_portal_login_register();
-void view_receipts(Customer* c);
-
+Customer *load_customer_by_id(int id);
+Customer *customer_login();
+Customer *customer_register();
+Customer *customer_portal_login_register();
+void view_receipts(Customer *c);
+void delete_customer(int id); // Added for customer deletion
 
 // Seller prototypes
-void add_seller();
-void list_sellers();
-void delete_seller();
-void update_seller();
-void search_seller();
-int parse_seller(const char *line, Seller *s);
-void print_seller(FILE *file, const Seller *s);
+// void add_seller();
+// void list_sellers();
+// void delete_seller();
+// void update_seller();
+// void search_seller();
+// int parse_seller(const char *line, Seller *s);
+// void print_seller(FILE *file, const Seller *s);
 
 // Payment prototypes
-void add_payment();
-void list_payments();
-void delete_payment();
-void update_payment();
-void search_payment();
 int parse_payment(const char *line, Payment *p);
 void print_payment(FILE *file, const Payment *p);
 int parse_payment_item(const char *line, PaymentItem *pi);
 void print_payment_item(FILE *file, const PaymentItem *pi);
 
-// Report prototypes
-void show_reports_menu();
-void report_daily_sales();
-void report_monthly_sales();
-void report_best_selling();
-void report_vip_customers();
-void report_current_stock();
-
-// Optimization prototypes
-Node *insert_bst(Node *root, void *data, int id, const char *name);
-Node *search_bst_by_id(Node *root, int id);
-Node *search_bst_by_name(Node *root, const char *name);
-void free_bst(Node *root);
+// Hash table prototypes
+void init_customer_hash_table();
+void cleanup_customer_hash_table(); // Added for cleanup
 void insert_hash(HashNode *table[], int key, void *value);
 void *search_hash(HashNode *table[], int key);
 void free_hash_table(HashNode *table[]);
+void delete_hash(HashNode *table[], int key);
 
 // AVL tree prototypes
 Node *insert_avl(Node *root, void *data, int id, const char *name);
