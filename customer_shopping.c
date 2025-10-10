@@ -27,6 +27,7 @@ void buy_flower(Customer *c) {
   }
 
   f.quantity -= quantity;
+  f.sold += quantity;
   update_flower_stock(&f);
 
   Payment payment;
@@ -84,6 +85,7 @@ void buy_pot(Customer *c) {
   }
 
   p.quantity -= quantity;
+  p.sold += quantity;
   update_pot_stock(&p);
 
   Payment payment;
