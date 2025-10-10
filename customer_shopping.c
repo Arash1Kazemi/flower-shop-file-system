@@ -121,4 +121,3 @@ void buy_pot(Customer *c) {
   printf("Total: $%.2f\n", payment.total_amount);
   printf("--------------------\n");
 }
-

@@ -10,14 +10,14 @@ int main(void) {
     printf("2 - Pots\n");
     printf("3 - Customers\n");
     printf("4 - Exit\n");
-    printf("5 - Customer Management\n"); // Added for extension
+    printf("5 - Customer Management\n");
 
     if (!get_valid_int("Your choice: ", &main_choice))
       continue;
 
     switch (main_choice) {
 
-    case 1: // flowers (unchanged)
+    case 1: // flowers
       while (1) {
         printf("\n--- flower menu ---\n");
         printf("1 - list flowers\n");
@@ -44,7 +44,7 @@ int main(void) {
       }
       break;
 
-    case 2: // pots (unchanged)
+    case 2: // pots
       while (1) {
         printf("\n--- pot menu ---\n");
         printf("1 - list pots\n");
@@ -71,7 +71,7 @@ int main(void) {
       }
       break;
 
-    case 3: { // customer portal (unchanged)
+    case 3: { // customer portal
       Customer *c = customer_portal_login_register();
       if (!c)
         break;

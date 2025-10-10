@@ -1,7 +1,6 @@
 #include "shop.h"
 #include <time.h>
 
-// Function to show the post-login customer menu
 void customer_menu(Customer *c) {
   int choice;
 
@@ -19,33 +18,19 @@ void customer_menu(Customer *c) {
       continue;
 
     switch (choice) {
-    case 1:
-      list_flowers();
-      break;
+    case 1: list_flowers(); break;
 
-    case 2:
-      list_pots();
-      break;
+    case 2: list_pots(); break;
 
-    case 3:
-      buy_flower(c);
-      break;
+    case 3: buy_flower(c); break;
 
-    case 4:
-      buy_pot(c);
-      break;
+    case 4: buy_pot(c); break;
 
-    case 5:
-      view_receipts(c);
-      break;
+    case 5: view_receipts(c); break;
 
-    case 6:
-      printf("logging out...\n");
-      return;
+    case 6: printf("logging out...\n"); return;
 
-    default:
-      printf("Invalid choice.\n");
+    default: printf("Invalid choice.\n");
     }
   }
 }
-

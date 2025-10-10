@@ -1,8 +1,7 @@
 #include "shop.h"
 
 Customer *load_customer_by_id(int id) {
-  // Use hash table for O(1) lookup
-  return (Customer *)search_hash(customer_hash_table, id);
+  return (Customer *)search_hash(customer_hash_table, id); // Use hash table
 }
 
 Customer *customer_login() {
@@ -87,8 +86,9 @@ Customer *customer_portal_login_register() {
     }
   }
 }
+
+// Similar to customer_register, but void for admin use
 void add_customer() {
-  // Similar to customer_register, but void for admin use
   Customer *c = malloc(sizeof(Customer));
   if (!c) {
     printf("Memory allocation failed for customer.\n");
@@ -120,7 +120,7 @@ void add_customer() {
   print_customer(file, c);
   fclose(file);
 
-  insert_hash(customer_hash_table, c->id, c); // O(1) insert into hash
+  insert_hash(customer_hash_table, c->id, c);
 
   printf("Customer added successfully! ID: %d\n", c->id);
 }
@@ -142,7 +142,7 @@ void search_customer() {
   if (!get_valid_int("Enter Customer ID to search: ", &id))
     return;
 
-  Customer *c = load_customer_by_id(id); // O(1) hash lookup
+  Customer *c = load_customer_by_id(id);
   if (!c) {
     printf("Customer not found.\n");
     return;
@@ -156,7 +156,7 @@ void update_customer() {
   if (!get_valid_int("Enter Customer ID to update: ", &id))
     return;
 
-  Customer *c = load_customer_by_id(id); // O(1) hash lookup
+  Customer *c = load_customer_by_id(id);
   if (!c) {
     printf("Customer not found.\n");
     return;
@@ -181,7 +181,7 @@ void update_customer() {
   if (strlen(buffer) > 0)
     strncpy(c->phone, buffer, sizeof(c->phone) - 1);
 
-  save_customers_from_hash(); // Persist changes to file
+  save_customers_from_hash();
   printf("Customer updated successfully.\n");
 }
 
@@ -195,7 +195,7 @@ void delete_customer() {
     return;
   }
 
-  delete_hash(customer_hash_table, id); // O(1) delete from hash
-  save_customers_from_hash();           // Persist to file
+  delete_hash(customer_hash_table, id);
+  save_customers_from_hash();
   printf("Customer ID %d deleted.\n", id);
 }

@@ -11,13 +11,13 @@
 #define SELLERS_FILE "sellers.txt"
 #define PAYMENTS_FILE "payments.txt"
 #define PAYMENT_ITEMS_FILE "payment_items.txt"
-#define HASH_SIZE 100
+#define HASH_SIZE 1000005
 
 #if defined(_WIN32) || defined(_WIN64)
-  #define stricmp _stricmp // windows
+#define stricmp _stricmp // windows
 #else
-  #include <strings.h> // linux
-  #define stricmp strcasecmp
+#include <strings.h> // linux
+#define stricmp strcasecmp
 #endif
 
 typedef struct {
@@ -81,7 +81,7 @@ typedef struct HashNode {
 } HashNode;
 
 // Declare global hash table for customers
-extern HashNode *customer_hash_table[HASH_SIZE]; // Global hash table for O(1) customer lookup
+extern HashNode *customer_hash_table[HASH_SIZE];
 
 // Helper prototypes
 int get_next_id(const char *filename);
@@ -129,20 +129,6 @@ Customer *customer_register();
 Customer *customer_portal_login_register();
 void view_receipts(Customer *c);
 
-
-
-
-
-
-// Seller prototypes
-// void add_seller();
-// void list_sellers();
-// void delete_seller();
-// void update_seller();
-// void search_seller();
-// int parse_seller(const char *line, Seller *s);
-// void print_seller(FILE *file, const Seller *s);
-
 // Payment prototypes
 int parse_payment(const char *line, Payment *p);
 void print_payment(FILE *file, const Payment *p);
@@ -158,8 +144,6 @@ void free_hash_table(HashNode *table[]);
 void delete_hash(HashNode *table[], int key);
 void save_customers_from_hash(); // Added for persisting hash to file
 
-
-
 // AVL tree prototypes
 Node *insert_avl(Node *root, void *data, int id, const char *name);
 Node *search_avl_by_id(Node *root, int id);
@@ -167,4 +151,3 @@ Node *search_avl_by_name(Node *root, const char *name);
 void free_avl(Node *root);
 
 #endif
-
