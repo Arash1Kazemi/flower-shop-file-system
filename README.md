@@ -1,1 +1,1 @@
-# DataBase project (first week of the semester)
+### DataBase project (first week of the semester)
