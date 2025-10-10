@@ -31,7 +31,7 @@ void buy_flower(Customer *c) {
   update_flower_stock(&f);
 
   Payment payment;
-  payment.id = get_next_id(PAYMENTS_FILE);
+  payment.id = flower_id;
   payment.customer_id = c->id;
   payment.seller_id = 1;
   get_current_date(payment.date, sizeof(payment.date));
@@ -44,7 +44,7 @@ void buy_flower(Customer *c) {
   }
 
   PaymentItem pi;
-  pi.payment_id = payment.id;
+  pi.payment_id = flower_id;
   pi.item_type = 'F';
   pi.item_id = f.id;
   pi.quantity = quantity;
@@ -89,7 +89,7 @@ void buy_pot(Customer *c) {
   update_pot_stock(&p);
 
   Payment payment;
-  payment.id = get_next_id(PAYMENTS_FILE);
+  payment.id = pot_id;
   payment.customer_id = c->id;
   payment.seller_id = 1;
   get_current_date(payment.date, sizeof(payment.date));
@@ -102,7 +102,7 @@ void buy_pot(Customer *c) {
   }
 
   PaymentItem pi;
-  pi.payment_id = payment.id;
+  pi.payment_id = pot_id;
   pi.item_type = 'P';
   pi.item_id = p.id;
   pi.quantity = quantity;
