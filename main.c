@@ -10,12 +10,14 @@ int main(void) {
     printf("2 - Pots\n");
     printf("3 - Customers\n");
     printf("4 - Exit\n");
+    printf("5 - Customer Management\n"); // Added for extension
 
     if (!get_valid_int("Your choice: ", &main_choice))
       continue;
 
     switch (main_choice) {
-    case 1: // flowers
+
+    case 1: // flowers (unchanged)
       while (1) {
         printf("\n--- flower menu ---\n");
         printf("1 - list flowers\n");
@@ -42,7 +44,7 @@ int main(void) {
       }
       break;
 
-    case 2:
+    case 2: // pots (unchanged)
       while (1) {
         printf("\n--- pot menu ---\n");
         printf("1 - list pots\n");
@@ -69,7 +71,7 @@ int main(void) {
       }
       break;
 
-    case 3: // customer portal
+    case 3: { // customer portal (unchanged)
       Customer *c = customer_portal_login_register();
       if (!c)
         break;
@@ -94,10 +96,39 @@ int main(void) {
         }
       }
       break;
+    }
 
     case 4:
       cleanup_customer_hash_table(); // Cleanup hash table before exit
       exit(0);
+
+    case 5: // Customer Management submenu using hash table
+      while (1) {
+        printf("\n--- Customer Management ---\n");
+        printf("1 - List Customers\n");
+        printf("2 - Add Customer\n");
+        printf("3 - Search Customer (by ID)\n");
+        printf("4 - Update Customer\n");
+        printf("5 - Delete Customer\n");
+        printf("6 - Back\n");
+
+        if (!get_valid_int("Your choice: ", &sub_choice))
+          continue;
+
+        if (sub_choice == 6)
+          break;
+
+        switch (sub_choice) {
+        case 1: list_customers(); break;
+        case 2: add_customer(); break;
+        case 3: search_customer(); break;
+        case 4: update_customer(); break;
+        case 5: delete_customer(); break;
+        default: printf("Invalid choice.\n");
+        }
+      }
+      break;
+
     default: printf("Invalid choice.\n");
     }
   }

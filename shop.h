@@ -104,6 +104,12 @@ int load_pot_by_id(int id, Pot *p);
 void update_pot_stock(const Pot *updated);
 
 // Customer prototypes
+void add_customer();
+void list_customers();
+void delete_customer();
+void update_customer();
+void search_customer();
+
 int parse_customer(const char *line, Customer *c);
 void print_customer(FILE *file, const Customer *c);
 void customer_menu(Customer *c);
@@ -115,7 +121,11 @@ Customer *customer_login();
 Customer *customer_register();
 Customer *customer_portal_login_register();
 void view_receipts(Customer *c);
-void delete_customer(int id); // Added for customer deletion
+
+
+
+
+
 
 // Seller prototypes
 // void add_seller();
@@ -139,6 +149,9 @@ void insert_hash(HashNode *table[], int key, void *value);
 void *search_hash(HashNode *table[], int key);
 void free_hash_table(HashNode *table[]);
 void delete_hash(HashNode *table[], int key);
+void save_customers_from_hash(); // Added for persisting hash to file
+
+
 
 // AVL tree prototypes
 Node *insert_avl(Node *root, void *data, int id, const char *name);
@@ -147,3 +160,4 @@ Node *search_avl_by_name(Node *root, const char *name);
 void free_avl(Node *root);
 
 #endif
+

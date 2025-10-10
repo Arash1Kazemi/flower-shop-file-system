@@ -179,3 +179,22 @@ void init_customer_hash_table() {
   }
   fclose(file);
 }
+
+void save_customers_from_hash() {
+  FILE *file = fopen(CUSTOMERS_FILE, "w");
+  if (!file) {
+    printf("Error opening customers file for save.\n");
+    return;
+  }
+
+  for (int i = 0; i < HASH_SIZE; i++) {
+    HashNode *node = customer_hash_table[i];
+    while (node) {
+      Customer *c = (Customer *)node->value;
+      print_customer(file, c);
+      node = node->next;
+    }
+  }
+
+  fclose(file);
+}
