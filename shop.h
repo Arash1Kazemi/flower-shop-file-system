@@ -11,7 +11,7 @@
 #define SELLERS_FILE "sellers.txt"
 #define PAYMENTS_FILE "payments.txt"
 #define PAYMENT_ITEMS_FILE "payment_items.txt"
-#define HASH_SIZE 1000005
+#define HASH_SIZE 100
 
 #if defined(_WIN32) || defined(_WIN64)
 #define stricmp _stricmp // windows
@@ -73,7 +73,6 @@ typedef struct Node {
   struct Node *right;
 } Node;
 
-// Hash table for O(1) lookup
 typedef struct HashNode {
   int key;
   void *value; // Generic

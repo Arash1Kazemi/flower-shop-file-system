@@ -193,7 +193,7 @@ void search_flower() {
     }
   }
   fclose(file);
-  printf("Loaded %d flowers into AVL tree.\n", count);
+// printf("Loaded %d flowers into AVL tree.\n", count);
 
   int found = 0;
   if (choice == 1) {
@@ -242,11 +242,11 @@ void search_flower() {
   free_avl(avl_root);
 }
 
-int parse_flower(const char *line, Flower *f) {
+int parse_flower(const char *line, Flower *f) { // crat object
   return sscanf(line, "%d,%49[^,],%f,%d,%d", &f->id, f->name, &f->price, &f->quantity, &f->sold) == 5;
 }
 
-void print_flower(FILE *file, const Flower *f) {
+void print_flower(FILE *file, const Flower *f) { // write object in file
   fprintf(file, "%d,%s,%.2f,%d,%d\n", f->id, f->name, f->price, f->quantity, f->sold);
 }
 

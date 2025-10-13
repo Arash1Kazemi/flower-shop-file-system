@@ -104,6 +104,16 @@ void free_avl(Node *root) {
 
 void insert_hash(HashNode *table[], int key, void *value) {
   int idx = key % HASH_SIZE;
+  int count = 0;
+  HashNode *node = table[idx];
+  while (node) {
+    count++;
+    node = node->next;
+  }
+  if (count > 10) {
+    printf("Writhing: %d collisions at index %d for key %d\n", count, idx, key);
+  }
+
   HashNode *new = malloc(sizeof(HashNode));
   if (!new) {
     printf("Memory allocation failed for hash node.\n");
