@@ -111,7 +111,7 @@ void insert_hash(HashNode *table[], int key, void *value) {
     node = node->next;
   }
   if (count > 10) {
-    printf("Writhing: %d collisions at index %d for key %d\n", count, idx, key);
+    printf("Writhing: %d hit at index %d for key %d\n", count, idx, key);
   }
 
   HashNode *new = malloc(sizeof(HashNode));

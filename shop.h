@@ -11,7 +11,7 @@
 #define SELLERS_FILE "sellers.txt"
 #define PAYMENTS_FILE "payments.txt"
 #define PAYMENT_ITEMS_FILE "payment_items.txt"
-#define HASH_SIZE 100
+#define HASH_SIZE 100000
 
 #if defined(_WIN32) || defined(_WIN64)
 #define stricmp _stricmp // windows
